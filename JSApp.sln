@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSApp", "JSApp\JSApp.vcproj", "{9634C25A-CFD9-440E-B197-06A23FE70B4E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSBase", "JSBase\JSBase.vcproj", "{DB4A66E6-25EB-498F-8B25-C269C26D224B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSLib", "JSLib\JSLib.vcproj", "{2CE5928C-4D4E-4A34-BC7C-EEA95A4A237C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9634C25A-CFD9-440E-B197-06A23FE70B4E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9634C25A-CFD9-440E-B197-06A23FE70B4E}.Debug|Win32.Build.0 = Debug|Win32
+		{9634C25A-CFD9-440E-B197-06A23FE70B4E}.Release|Win32.ActiveCfg = Release|Win32
+		{9634C25A-CFD9-440E-B197-06A23FE70B4E}.Release|Win32.Build.0 = Release|Win32
+		{DB4A66E6-25EB-498F-8B25-C269C26D224B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DB4A66E6-25EB-498F-8B25-C269C26D224B}.Debug|Win32.Build.0 = Debug|Win32
+		{DB4A66E6-25EB-498F-8B25-C269C26D224B}.Release|Win32.ActiveCfg = Release|Win32
+		{DB4A66E6-25EB-498F-8B25-C269C26D224B}.Release|Win32.Build.0 = Release|Win32
+		{2CE5928C-4D4E-4A34-BC7C-EEA95A4A237C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2CE5928C-4D4E-4A34-BC7C-EEA95A4A237C}.Debug|Win32.Build.0 = Debug|Win32
+		{2CE5928C-4D4E-4A34-BC7C-EEA95A4A237C}.Release|Win32.ActiveCfg = Release|Win32
+		{2CE5928C-4D4E-4A34-BC7C-EEA95A4A237C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

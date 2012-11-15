@@ -1,0 +1,4 @@
+LIBRARY	"JSBase"
+EXPORTS        
+   Initialize   @1
+

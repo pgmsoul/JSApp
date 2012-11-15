@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root
+  Style="0"
+  Weight="0.000000"
+  Length="0"
+  Margin_Left="A"
+  Margin_Top="A"
+  Margin_Right="A"
+  Margin_Bottom="A">
+  <Layout
+    Style="0"
+    Weight="1.000000"
+    Length="0"
+    Margin_Left="0"
+    Margin_Top="0"
+    Margin_Right="0"
+    Margin_Bottom="0"
+    Ctrl_Class="Edit"
+    Ctrl_Text=""
+    Ctrl_Style="50010080"
+    Ctrl_ExStyle="200"
+    Ctrl_ID="0">
+  </Layout>
+  <Layout1
+    Style="0"
+    Weight="1.000000"
+    Length="0"
+    Margin_Left="0"
+    Margin_Top="0"
+    Margin_Right="0"
+    Margin_Bottom="0"
+    Ctrl_Class="Button"
+    Ctrl_Text=""
+    Ctrl_Style="50010000"
+    Ctrl_ExStyle="0"
+    Ctrl_ID="0">
+  </Layout1>
+</Root>
