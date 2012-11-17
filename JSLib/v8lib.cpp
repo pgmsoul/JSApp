@@ -117,6 +117,16 @@ namespace v8{
 			r = ::MessageBox(0,L"",L"alert",MB_ICONINFORMATION);
 		return Undefined();
 	}
+	Handle<Value> GetCodePage(const Arguments& args){
+		HandleScope store;
+		base::String codeName;
+		DWORD code;
+		if(args.Length()>0){
+			GetString(args[0],codeName);
+			code = base::GetCodePage(codeName);
+		}else code = 3;
+		return store.Close(Uint32::New(code));
+	}
 	Handle<Value> _runJSCode(const Arguments& args){
 		if(args.Length()<1) return Undefined();
 		HandleScope store;
@@ -139,6 +149,14 @@ namespace v8{
 		}
 		return store.Close(runJSFile((LPCWSTR)*js,fn));
 	}
+	Handle<Value> _print(const Arguments& args){
+		if(args.Length()<1) return Undefined();
+		base::String buf;
+		GetString(args[0],buf);
+		buf += L"\r\n";
+		::OutputDebugString(buf);
+		return Undefined();
+	}	
 	void initContext(){
 		if(g_c) return;
 		g_c = new Persistent<Context>;
@@ -149,9 +167,11 @@ namespace v8{
 
 		Local<Object> gObj = (*g_c)->Global();
 		gObj->Set(String::New("alert"),FunctionTemplate::New(Alert)->GetFunction(),ReadOnly);
+		gObj->Set(String::New("getCodePage"),FunctionTemplate::New(GetCodePage)->GetFunction(),ReadOnly);
 		gObj->Set(String::New("loadLibrary"),FunctionTemplate::New(loadJSDLL)->GetFunction(),ReadOnly);
 		gObj->Set(String::New("runJSCode"),FunctionTemplate::New(&_runJSCode)->GetFunction(),ReadOnly);
 		gObj->Set(String::New("runJSFile"),FunctionTemplate::New(&_runJSFile)->GetFunction(),ReadOnly);
+		gObj->Set(String::New("output"),FunctionTemplate::New(&_print)->GetFunction(),ReadOnly);
 		Handle<Object> glb = runJSCode(L"(function(){return this;})();")->ToObject();
 		//global 全局变量,所有顶级对象都是它的属性.
 		glb->Set(String::New("global"),glb);
@@ -182,12 +202,12 @@ namespace v8{
 		handle->Set(String::New("release"),FunctionTemplate::New(&freeJSDll)->GetFunction(),ReadOnly);
 		return store.Close(handle);
 	}
-	Handle<Value> runJSRes(base::ResID jr){
+	Handle<Value> runJSRes(base::ResID jr,LPCWSTR name){
 		DWORD sz;
 		void* res = base::GetResource(jr,L"RT_JS",&sz);
 		if(res==0) return Undefined();
 		base::String js;
 		js.FromMultiByte((LPCSTR)res,sz,CP_UTF8);
-		return runJSCode(js,L"struct");
+		return runJSCode(js,name);
 	}
 };

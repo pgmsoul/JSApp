@@ -208,10 +208,10 @@ namespace v8{
 		SETACCESSOR(L"rect",BWndPtr);
 		SETACCESSOR(L"location",BWndPtr);
 		SETACCESSOR(L"size",BWndPtr);
-		SETFUNC(invalidate,BWndPtr);
-		SETFUNC(close,BWndPtr);
-		SETFUNC(client,BWndPtr);
-		SETFUNC(offset,BWndPtr);
+		SETCLAFUNC(invalidate,BWndPtr);
+		SETCLAFUNC(close,BWndPtr);
+		SETCLAFUNC(client,BWndPtr);
+		SETCLAFUNC(offset,BWndPtr);
 	}
 	//BView
 	_BView::~_BView(){
@@ -407,9 +407,9 @@ namespace v8{
 		SETACCESSOR(L"onCommand",BView);
 		SETACCESSOR(L"onMouse",BView);
 		SETACCESSOR(L"onDraw",BView);
-		SETFUNC(create,BView);
-		SETFUNC(scr,BView);
-		SETFUNC(logPos,BView);
+		SETCLAFUNC(create,BView);
+		SETCLAFUNC(scr,BView);
+		SETCLAFUNC(logPos,BView);
 	}
 	//BFrame
 	void _BFrame::Initialize(){
@@ -449,7 +449,7 @@ namespace v8{
 		HandleScope store;
 		name = L"BFrame";
 		GetTemplate()->Inherit(BView::GetTemplate());
-		SETFUNC(create,BFrame);
+		SETCLAFUNC(create,BFrame);
 	}
 	void LoadWndToJS(Handle<Object>& gObj){
 		HandleScope store;

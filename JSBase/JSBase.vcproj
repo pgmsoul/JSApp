@@ -245,6 +245,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\v8file.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\v8wnd.cpp"
 				>
 			</File>
@@ -287,11 +291,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\targetver.h"
+				RelativePath=".\v8ctrl.h"
 				>
 			</File>
 			<File
-				RelativePath=".\v8ctrl.h"
+				RelativePath=".\v8file.h"
 				>
 			</File>
 			<File
@@ -309,6 +313,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\after.js"
+			>
+		</File>
 		<File
 			RelativePath=".\base.js"
 			>

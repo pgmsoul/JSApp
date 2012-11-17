@@ -47,7 +47,7 @@ namespace v8{
 			base::String fstr;
 			fstr.Format(L"return '%s'",objname);
 			SetJsFunc(ot_inst,L"toString",fstr);
-			SETFUNC(handle,_BWRAP);
+			SETCLAFUNC(handle,_BWRAP);
 			glb->Set(String::New((uint16_t*)objname.Handle()),objcreate->GetFunction());
 		}
 		inline void Wrap (Handle<Object> handle) {

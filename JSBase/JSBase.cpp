@@ -10,9 +10,12 @@ JSBASE_API void __stdcall Initialize(Persistent<Context>* c){
 	Local<Object> glb = (*g_c)->Global();
 	base::ResID jr(IDR_JS_BASE);
 	jr.Instance = baseHandle;
-	runJSRes(jr);
+	runJSRes(jr,L"base.pre");
 	LoadGDIToJS(glb);
 	LoadWndToJS(glb);
 	LoadCtrlToJS(glb);
 	LoadWndFunc(glb);
+	LoadFileToJS(glb);
+	jr = IDR_JS_AFTER;
+	runJSRes(jr,L"base.after");
 }

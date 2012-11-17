@@ -103,3 +103,72 @@ BFilePath.isSame = function(path1, path2) {
     path2 = BFilePath.toSlash(path2);
     return path1.localeCompare(path2) == 0;
 }
+//获取字节数组
+String.prototype.toBytes = function() {
+    var result = [];
+    for (var i = 0; i < this.length; i++)
+        result.push(this.charCodeAt(i) >> 8, this.charCodeAt(i) & 0xff);
+    return result;
+}
+//从字节数组生成, 注意JavaScript不能改变一个字串, 所以无法给this赋值, 返回值才是要的结果. 如果输入字节非偶数, 剩余的一个字节会被舍弃.
+String.prototype.fromBytes = function(bytes) {
+    var result = "";
+    for (var i = 0; i < bytes.length; i += 2)
+        result += String.fromCharCode((bytes[i] << 8) + bytes[i + 1]);
+    return result;
+}
+//encode64编解码
+global.encode64 = function(str) {
+    var codeChar = "PaAwO65goUf7IK2vi9}xq8cFTEXLCDY1Hd3tV0ryzjbpN{BlnSs4mGRkQWMZJeuh";
+    var s = "";
+    var a = str.toBytes(); //取得字串的字节数组, 数组长度是字串长度的2倍.
+    var res = a.length % 3; //3个字节一组进行处理, 余下特殊处理
+    var i = 2, v;
+    for (; i < a.length; i += 3) {//每3个字节用4个字符表示, 相当于3个字符(实际上是6个字节)用8个字符编码(实际为16个字节), 看起来容量膨胀了很多, 但是在启用压缩的情况下, 这些又被抵消掉了.
+        v = a[i - 2] + (a[i - 1] << 8) + (a[i] << 16);
+        s += codeChar.charAt(v & 0x3f);
+        s += codeChar.charAt((v >> 6) & 0x3f);
+        s += codeChar.charAt((v >> 12) & 0x3f);
+        s += codeChar.charAt((v >> 18));
+    }
+    if (res == 1) {//字节余一位时候, 补2个字符, 64*64>256
+        v = a[i - 2];
+        s += codeChar.charAt(v & 0x3f);
+        s += codeChar.charAt((v >> 6) & 0x3f);
+    } else if (res == 2) {//字节余2位的时候, 补3个字节, 64*64*64>256*256, 所以是可行的.
+        v = a[i - 2] + (a[i - 1] << 8);
+        s += codeChar.charAt(v & 0x3f);
+        s += codeChar.charAt((v >> 6) & 0x3f);
+        s += codeChar.charAt((v >> 12) & 0x3f);
+    }
+    return s;
+};
+global.decode64 = function(codeStr) {
+    var codeChar = "PaAwO65goUf7IK2vi9}xq8cFTEXLCDY1Hd3tV0ryzjbpN{BlnSs4mGRkQWMZJeuh";
+    var dic = [];
+    for (var i = 0; i < codeChar.length; i++) {
+        dic[codeChar.charAt(i)] = i;
+    }
+    var code = [];
+    var res = codeStr.length % 4;
+    var i = 3, v;
+    for (; i < codeStr.length; i += 4) {
+        v = dic[codeStr.charAt(i - 3)];
+        v += dic[codeStr.charAt(i - 2)] << 6;
+        v += dic[codeStr.charAt(i - 1)] << 12;
+        v += dic[codeStr.charAt(i)] << 18;
+        code.push(v & 0xff, (v >> 8) & 0xff, (v >> 16) & 0xff);
+    }
+    if (res == 2) {//正确的字节数肯定是余2或3, 没有1的情况, 如果出现, 舍弃.
+        v = dic[codeStr.charAt(i - 3)];
+        v += dic[codeStr.charAt(i - 2)] << 6;
+        code.push(v & 0xff);
+    } else if (res == 3) {
+        v = dic[codeStr.charAt(i - 3)];
+        v += dic[codeStr.charAt(i - 2)] << 6;
+        v += dic[codeStr.charAt(i - 1)] << 12;
+        code.push(v & 0xff, (v >> 8) & 0xff);
+    }
+    return String.fromBytes(code);
+};
+    

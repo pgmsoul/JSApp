@@ -15,7 +15,7 @@ namespace v8{
 	void BCtrl::_onLoad(v8::Handle<ObjectTemplate>& ot_func,v8::Handle<ObjectTemplate>& ot_inst,base::String& name,v8::Handle<FunctionTemplate>& objcreate){
 		name = L"BCtrl";
 		GetTemplate()->Inherit(BWndPtr::GetTemplate());
-		SETFUNC(create,BCtrl);
+		SETCLAFUNC(create,BCtrl);
 	}
 
 	_BEdit::_BEdit(){

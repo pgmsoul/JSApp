@@ -7,5 +7,6 @@
 #include "bctrl.h"
 #include "v8wnd.h"
 #include "v8ctrl.h"
+#include "v8file.h"
 
 extern HINSTANCE baseHandle;

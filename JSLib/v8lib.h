@@ -1,15 +1,18 @@
 #pragma once
 
 #define SETFUNCION(name,func) ot_func->Set(String::New((uint16_t*)name),FunctionTemplate::New(func),ReadOnly)
-#define SETFUNC(name,Cla) ot_func->Set(String::New(#name),FunctionTemplate::New(&Cla::_##name),ReadOnly)
+#define SETCLAFUNC(name,Cla) ot_func->Set(String::New(#name),FunctionTemplate::New(&Cla::_##name),ReadOnly)
+#define SETOBJCLAFUNC(obj,name,Cla) obj->Set(String::New(#name),FunctionTemplate::New(&Cla::_##name)->GetFunction(),ReadOnly)
 //ReadOnly属性自动屏蔽set调用。
 #define SETREADONLYACCESSOR(name,Cla) ot_inst->SetAccessor(String::New((uint16_t*)name),&Cla::_get,&Cla::_set,Handle<Value>(),DEFAULT,ReadOnly)
 #define SETACCESSOR(name,Cla) ot_inst->SetAccessor(String::New((uint16_t*)name),&Cla::_get,&Cla::_set)
 #define SETGETOR(name,Cla) ot_inst->SetAccessor(String::New((uint16_t*)name),&Cla::_get,0,Handle<Value>(),DEFAULT,ReadOnly)
+#define SETOBJCONST(obj,name,PRE) obj->Set(String::New(#name),Uint32::New(PRE##_##name),ReadOnly)
 #define SETCONST(name,PRE) objcreate->Set(String::New(#name),Uint32::New(PRE##_##name),ReadOnly)
 #define SETCONST2(name,val) objcreate->Set(String::New(#name),Uint32::New(val),ReadOnly)
 #define Bool(b) b?True():False()
 #define GETARGSINT(i) args.Length()>i?args[i]->Int32Value():0
+#define GETARGSVALUE(i,def,T) (args.Length()>i?args[i]->T##Value():def)
 namespace v8{
 	//因为这个库可以供JSApp用, 也可以供其它DLL用, 而这是一个静态库. 静态库在不同的
 	//工程中实际上都有自己的一个拷贝, 所以DLL使用这个变量应该在Initialize中使用传入
@@ -58,7 +61,12 @@ namespace v8{
 	}
 	template<typename T> inline T GetArgs(Handle<Value> val){
 		return (T)(INT_PTR)val->Int32Value();
-	}	int ReportError(TryCatch& err);
+	}
+	template<typename T> bool ObjIsType(Handle<Value> v){
+		return v->ToObject()->GetConstructor()==T::GetTemplate()->GetFunction();
+
+	}
+	int ReportError(TryCatch& err);
 	enum MSG_TYPE{
 		MT_ERROR = MB_ICONERROR,
 		MT_WARN = MB_ICONWARNING,
@@ -70,11 +78,11 @@ namespace v8{
 	int InnerMsg(Handle<Value> msg,MSG_TYPE mt = MT_INFO);
 	int InnerMsg(LPCWSTR msg,MSG_TYPE mt);
 	//运行一段Js代码, 并且返回结果.
-	v8::Handle<Value> runJSCode(LPCWSTR js,LPCWSTR fn = 0);
+	v8::Handle<Value> runJSCode(LPCWSTR js,LPCWSTR name = 0);
 	//加载Js文件, 并且返回结果.
 	v8::Handle<Value> runJSFile(LPCWSTR file,LPCWSTR code = 0);
 	//运行以UTF-8编码保存的JS代码文本资源.
-	Handle<Value> runJSRes(base::ResID jr);
+	Handle<Value> runJSRes(base::ResID jr,LPCWSTR name);
 	//读取一个js文件,cp是文件文本编码.
 	bool loadFile(base::String& js,LPCWSTR file,LPCWSTR cp = 0);
 	//加载一个DLL

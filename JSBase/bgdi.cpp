@@ -177,12 +177,12 @@ namespace v8{
 	}
 	void BPen::_onLoad(v8::Handle<ObjectTemplate> &ot_func, v8::Handle<ObjectTemplate> &ot_inst, base::String &name, v8::Handle<FunctionTemplate> &objcreate){
 		name = L"BPen";
-		SETFUNC(moveTo,BPen);
-		SETFUNC(lineTo,BPen);
-		SETFUNC(drawRect,BPen);
-		SETFUNC(roundRect,BPen);
-		SETFUNC(polyTo,BPen);
-		SETFUNC(arc,BPen);
+		SETCLAFUNC(moveTo,BPen);
+		SETCLAFUNC(lineTo,BPen);
+		SETCLAFUNC(drawRect,BPen);
+		SETCLAFUNC(roundRect,BPen);
+		SETCLAFUNC(polyTo,BPen);
+		SETCLAFUNC(arc,BPen);
 		v8::Handle<Value> jsf = runJSCode(L"new Function(\"dc\",\"x\",\"y\",\"rx\",\"ry\",\"this.arc(dc,new BRect(x-rx,y-ry,x+rx,y+ry),new BRect(x,y-ry,x,y-ry));\")");
 		ot_inst->Set(String::New("ellipse"),jsf,ReadOnly);
 		SETACCESSOR(L"color",BPen);
@@ -343,16 +343,16 @@ namespace v8{
 	}
 	void BRgn::_onLoad(v8::Handle<ObjectTemplate> &ot_func, v8::Handle<ObjectTemplate> &ot_inst, base::String &name, v8::Handle<FunctionTemplate> &objcreate){
 		name = L"BRgn";
-		SETFUNC(rect,BRgn);
-		SETFUNC(poly,BRgn);
-		SETFUNC(ellipse,BRgn);
-		SETFUNC(roundRect,BRgn);
-		SETFUNC(combine,BRgn);
-		SETFUNC(offset,BRgn);
-		SETFUNC(equal,BRgn);
-		SETFUNC(copy,BRgn);
-		SETFUNC(pointIn,BRgn);
-		SETFUNC(rectBox,BRgn);
+		SETCLAFUNC(rect,BRgn);
+		SETCLAFUNC(poly,BRgn);
+		SETCLAFUNC(ellipse,BRgn);
+		SETCLAFUNC(roundRect,BRgn);
+		SETCLAFUNC(combine,BRgn);
+		SETCLAFUNC(offset,BRgn);
+		SETCLAFUNC(equal,BRgn);
+		SETCLAFUNC(copy,BRgn);
+		SETCLAFUNC(pointIn,BRgn);
+		SETCLAFUNC(rectBox,BRgn);
 
 		SETCONST2(AND,base::gdi::Rgn::And);
 		SETCONST2(OR,base::gdi::Rgn::Or);
@@ -498,11 +498,11 @@ namespace v8{
 	void BBrush::_onLoad(v8::Handle<ObjectTemplate>& ot_func,v8::Handle<ObjectTemplate>& ot_inst,base::String& name,v8::Handle<FunctionTemplate>& objcreate){
 		HandleScope store;
 		name = L"BBrush";
-		SETFUNC(fillRgn,BBrush);
-		SETFUNC(fillRect,BBrush);
-		SETFUNC(ellipse,BBrush);
-		SETFUNC(roundRect,BBrush);
-		SETFUNC(poly,BBrush);
+		SETCLAFUNC(fillRgn,BBrush);
+		SETCLAFUNC(fillRect,BBrush);
+		SETCLAFUNC(ellipse,BBrush);
+		SETCLAFUNC(roundRect,BBrush);
+		SETCLAFUNC(poly,BBrush);
 		SETACCESSOR(L"color",BBrush);
 	}
 
@@ -559,7 +559,7 @@ namespace v8{
 	void BFont::_onLoad(v8::Handle<ObjectTemplate>& ot_func,v8::Handle<ObjectTemplate>& ot_inst,base::String& name,v8::Handle<FunctionTemplate>& objcreate){
 		HandleScope store;
 		name = L"BFont";
-		SETFUNC(setDefault,BFont);
+		SETCLAFUNC(setDefault,BFont);
 		SETACCESSOR(L"name",BFont);
 		SETACCESSOR(L"size",BFont);
 		SETACCESSOR(L"italic",BFont);
@@ -718,17 +718,17 @@ namespace v8{
 	void BBitmap::_onLoad(v8::Handle<ObjectTemplate>& ot_func,v8::Handle<ObjectTemplate>& ot_inst,base::String& name,v8::Handle<FunctionTemplate>& objcreate){
 		HandleScope store;
 		name = L"BBitmap";
-		SETFUNC(save,BBitmap);
-		SETFUNC(load,BBitmap);
-		SETFUNC(getSize,BBitmap);
-		SETFUNC(setSize,BBitmap);
-		SETFUNC(create,BBitmap);
-		SETFUNC(fromBitmap,BBitmap);
-		SETFUNC(fromIcon,BBitmap);
-		SETFUNC(fromImage,BBitmap);
-		SETFUNC(clip,BBitmap);
-		SETFUNC(getPixelArray,BBitmap);
-		SETFUNC(setPixelArray,BBitmap);
+		SETCLAFUNC(save,BBitmap);
+		SETCLAFUNC(load,BBitmap);
+		SETCLAFUNC(getSize,BBitmap);
+		SETCLAFUNC(setSize,BBitmap);
+		SETCLAFUNC(create,BBitmap);
+		SETCLAFUNC(fromBitmap,BBitmap);
+		SETCLAFUNC(fromIcon,BBitmap);
+		SETCLAFUNC(fromImage,BBitmap);
+		SETCLAFUNC(clip,BBitmap);
+		SETCLAFUNC(getPixelArray,BBitmap);
+		SETCLAFUNC(setPixelArray,BBitmap);
 	}
 	//BTextDraw
 	_BTextDraw::_BTextDraw(){
@@ -865,9 +865,9 @@ namespace v8{
 	void BTextDraw::_onLoad(v8::Handle<ObjectTemplate>& ot_func,v8::Handle<ObjectTemplate>& ot_inst,base::String& name,v8::Handle<FunctionTemplate>& objcreate){
 		HandleScope store;
 		name = L"BTextDraw";
-		SETFUNC(draw,BTextDraw);
-		SETFUNC(drawRect,BTextDraw);
-		SETFUNC(calcRect,BTextDraw);
+		SETCLAFUNC(draw,BTextDraw);
+		SETCLAFUNC(drawRect,BTextDraw);
+		SETCLAFUNC(calcRect,BTextDraw);
 		SETACCESSOR(L"align",BTextDraw);
 		SETACCESSOR(L"font",BTextDraw);
 		SETACCESSOR(L"color",BTextDraw);
@@ -1110,19 +1110,19 @@ namespace v8{
 	void BImage::_onLoad(v8::Handle<ObjectTemplate>& ot_func,v8::Handle<ObjectTemplate>& ot_inst,base::String& name,v8::Handle<FunctionTemplate>& objcreate){
 		HandleScope store;
 		name = L"BImage";
-		SETFUNC(save,BImage);
-		SETFUNC(load,BImage);
-		SETFUNC(getSize,BImage);
-		SETFUNC(setSize,BImage);
-		SETFUNC(create,BImage);
-		SETFUNC(fromBitmap,BImage);
-		SETFUNC(fromIcon,BImage);
-		SETFUNC(fromImage,BImage);
-		SETFUNC(clip,BImage);
-		SETFUNC(getPixelArray,BImage);
-		SETFUNC(setPixelArray,BImage);
-		SETFUNC(draw,BImage);
-		SETFUNC(alphaDraw,BImage);
+		SETCLAFUNC(save,BImage);
+		SETCLAFUNC(load,BImage);
+		SETCLAFUNC(getSize,BImage);
+		SETCLAFUNC(setSize,BImage);
+		SETCLAFUNC(create,BImage);
+		SETCLAFUNC(fromBitmap,BImage);
+		SETCLAFUNC(fromIcon,BImage);
+		SETCLAFUNC(fromImage,BImage);
+		SETCLAFUNC(clip,BImage);
+		SETCLAFUNC(getPixelArray,BImage);
+		SETCLAFUNC(setPixelArray,BImage);
+		SETCLAFUNC(draw,BImage);
+		SETCLAFUNC(alphaDraw,BImage);
 	}
 	//BIcon
 	_BIcon::_BIcon(){
@@ -1219,13 +1219,13 @@ namespace v8{
 	void BIcon::_onLoad(v8::Handle<ObjectTemplate>& ot_func,v8::Handle<ObjectTemplate>& ot_inst,base::String& name,v8::Handle<FunctionTemplate>& objcreate){
 		HandleScope store;
 		name = L"BIcon";
-		SETFUNC(load,BIcon);
-		SETFUNC(fromIcon,BIcon);
-		SETFUNC(fromImage,BIcon);
-		SETFUNC(fromBitmap,BIcon);
-		SETFUNC(draw,BIcon);
-		SETFUNC(size,BIcon);
-		SETFUNC(toBlackWhite,BIcon);
+		SETCLAFUNC(load,BIcon);
+		SETCLAFUNC(fromIcon,BIcon);
+		SETCLAFUNC(fromImage,BIcon);
+		SETCLAFUNC(fromBitmap,BIcon);
+		SETCLAFUNC(draw,BIcon);
+		SETCLAFUNC(size,BIcon);
+		SETCLAFUNC(toBlackWhite,BIcon);
 	}
 	//
 	void LoadGDIToJS(v8::Handle<Object>& glb){

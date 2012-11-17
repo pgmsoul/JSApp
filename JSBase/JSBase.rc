@@ -53,6 +53,7 @@ END
 //
 
 IDR_JS_BASE             RT_JS                   "base.js"
+IDR_JS_AFTER            RT_JS                   "after.js"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 

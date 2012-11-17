@@ -7,7 +7,7 @@ int __stdcall wWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdL
 	int rt = -1;
 	initContext();
 	HandleScope store;
-	runJSRes(IDR_JS_STRUCT);
+	runJSRes(IDR_JS_STRUCT,L"app.lib");
 	Handle<Value> result = runJSFile(L"main.js",L"utf-8");
 	if(!result.IsEmpty()){//只有出错的时候才会返回Empty, 否则即使没有返回值, result仍然是Undefined.
 		Local<Object> gObj = getGlobal();

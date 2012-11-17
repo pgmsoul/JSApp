@@ -174,10 +174,6 @@
 				RelativePath=".\JSApp.rc"
 				>
 			</File>
-			<File
-				RelativePath=".\rt_js1.bin"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
