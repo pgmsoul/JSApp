@@ -408,7 +408,7 @@ namespace v8{
 		dd->Cancel = fi->inf->Get(String::New("skip"))->BooleanValue();
 		dd->Stop = fi->inf->Get(String::New("stop"))->BooleanValue();
 	}
-	void _bfs(base::DirectorySystem& fs,FSINF& fi,const Arguments& args){
+	void _bfs(base::DSParam& fs,FSINF& fi,const Arguments& args){
 		if(args.Length()>2&&args[2]->IsFunction()){
 			fi.recv = args.Holder();
 			fi.folderProc = Local<Function>::Cast(args[2]);
@@ -423,41 +423,39 @@ namespace v8{
 	}
 	Handle<Value> BFileSystem::_delete(const Arguments& args){
 		if(args.Length()<1) return False();
-		base::String file;
-		GetString(args[0],file);
+		base::DSParam dsp;
+		GetString(args[0],dsp.Source);
 		HandleScope store;
 		FSINF fi;
-		base::DirectorySystem fs;
 		if(args.Length()>1&&args[1]->IsFunction()){
 			fi.recv = args.Holder();
 			fi.inf = Object::New();
 			fi.folderProc = Local<Function>::Cast(args[1]);
-			fs.UserData = &fi;
-			fs.OnProgress.Bind(_onDirProgress);
+			dsp.UserData = &fi;
+			dsp.OnProgress.Bind(_onDirProgress);
 		}
-		return Bool(fs.Delete(file));
+		return Bool(base::DirectorySystem::Delete(&dsp));
 	}
 	Handle<Value> BFileSystem::_copy(const Arguments& args){
 		if(args.Length()<2) return False();
-		base::String src,dst;
-		GetString(args[0],src);
-		GetString(args[1],dst);
+		base::DSParam dsp;
+		GetString(args[0],dsp.Source);
+		GetString(args[1],dsp.Destinate);
 		base::DirectorySystem fs;
 		HandleScope store;
 		FSINF fi;
-		_bfs(fs,fi,args);
-		return Bool(fs.Copy(src,dst));
+		_bfs(dsp,fi,args);
+		return Bool(base::DirectorySystem::Copy(&dsp));
 	}
 	Handle<Value> BFileSystem::_move(const Arguments& args){
 		if(args.Length()<2) return False();
-		base::String src,dst;
-		GetString(args[0],src);
-		GetString(args[1],dst);
-		base::DirectorySystem fs;
+		base::DSParam dsp;
+		GetString(args[0],dsp.Source);
+		GetString(args[1],dsp.Destinate);
 		HandleScope store;
 		FSINF fi;
-		_bfs(fs,fi,args);
-		return Bool(fs.Move(src,dst));
+		_bfs(dsp,fi,args);
+		return Bool(base::DirectorySystem::Move(&dsp));
 	}
 
 	Handle<Value> BFileSystem::_createFolder(const Arguments& args){

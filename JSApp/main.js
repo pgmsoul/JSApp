@@ -3,15 +3,16 @@ function main() {
     var search = new BFileSearch();
     search.onList = onList;
     var param = search.param;
-    search.param = "abc";
-    alert(search.param);
-    param.childFolder = true;
-    param.onlyFile = false;
-    param.afterCall = true;
-    search.filter.push("cpp","h","obj");
-    search.filter = "abc";
-    search.search("d:\\My Lib\\JavaScript\\App.JS\\JSApp");
+    //search.filter.push("cpp","h","obj");
+    search.search("D:\\Video\\百家讲坛_两宋风云");
 }
 function onList(inf) {
-    output(inf.name);
+    var src = inf.original + "/" + inf.name;
+    var pos = inf.name.indexOf("两宋风云");
+    if (pos < 0) return;
+    pos += 4;
+    inf.name = inf.name.substr(pos, 7) + ".rmvb";
+    var dst = inf.original + "/" + inf.name;
+    var r = BFileSystem.move(src, dst);
+    output(inf.name + ":" + r);
 }
